@@ -22,9 +22,7 @@ class Wrangle:
         api key for Alpha Vantage
     intrinio_key : default
         api key for intrinio
-    week : int
-        week number during the season
-        
+
     -----------------------------
     Attributes 
     -----------------------------
@@ -34,8 +32,7 @@ class Wrangle:
                  interval='daily',
                  outputsize='full',
                  alpha_vantage_key=config('ALPHA_VANTAGE'), 
-                 intrinio_key=config('INTRINIO_KEY'), 
-                 week=None):
+                 intrinio_key=config('INTRINIO_KEY')):
         self.interval = interval
         self.alpha_vantage_key = alpha_vantage_key
         self.intinio_key = intrinio_key
