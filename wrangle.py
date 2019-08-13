@@ -59,7 +59,7 @@ class Wrangle:
         self.intrinio_key = intrinio_key
 
 
-    def security(self, supp_symbol=None, primary_df=None, step='init',):
+    def initiate(self, supp_symbol=None, primary_df=None, step='init',):
     
         # TODO ASSERT Error if step /= 'new' or 'add'
         # TODO ASSERT Error if step == 'add' and no supplimental ticker is provided
