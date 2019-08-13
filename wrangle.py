@@ -1,24 +1,28 @@
-#from alpha_vantage.techindicators import TechIndicators
+from alpha_vantage.foreignexchange import ForeignExchange
+from alpha_vantage.techindicators import TechIndicators
 from alpha_vantage.timeseries import TimeSeries
 from decouple import config
 import pandas as pd
+import quandl
 
 #pylint: disable=no-member
 #pylint: disable=unbalanced-tuple-unpacking
 
-#TODO Tech Indicators
+#TODO ASSERT Testing
+#TODO Print Statements
+#TODO Clean Documentation
 #TODO Find TWEXB
-#TODO FOREX?
-#TODO Other Macro?
+#TODO Other Macro from Hira
 
 class Wrangle:
     """
     Class based data wrangling function. Uses the APIs to 
     import the data, then wrangles it together.
+    
+    -----------------------------
+    Attributes
+    -----------------------------
 
-    -----------------------------
-    Parameters
-    -----------------------------
     symbol : str
         string ticker used to identify the security. eg['AAPL', 'SPX'... etc.]
     interval : str
@@ -36,7 +40,7 @@ class Wrangle:
         api key for intrinio
 
     -----------------------------
-    Attributes 
+    Methods 
     -----------------------------
     """
 
@@ -55,10 +59,7 @@ class Wrangle:
         self.intrinio_key = intrinio_key
 
 
-    def security(self,  
-                 supp_symbol=None, 
-                 primary_df=None,
-                 step='init',):
+    def security(self, supp_symbol=None, primary_df=None, step='init',):
     
         # TODO ASSERT Error if step /= 'new' or 'add'
         # TODO ASSERT Error if step == 'add' and no supplimental ticker is provided
@@ -130,9 +131,82 @@ class Wrangle:
 
         return final_df
 
-    def add_technicals(self, symbols, primary_df):
-        #TODO 
-        pass
+    def add_technicals(self, tech_symbols, primary_df, supp_symbol=None):
+
+        if supp_symbol ==  None:
+            symbol = self.symbol
+        else:
+            symbol = supp_symbol
+            
+        ti = TechIndicators(key=config('ALPHA_VANTAGE'), 
+                            output_format='pandas')
+        
+        new_indicators = ["get_"+symbol.lower() for symbol in tech_symbols]
+
+        i_count = 0 
+
+        for ind in new_indicators:
+
+            data, meta_data = getattr(ti, ind)(symbol=symbol)
+
+            print(meta_data)
+
+            data = data.rename(columns={
+                    symbol : self.symbol+'_'+symbol, 
+            }
+        )
+            if i_count == 0:
+                final_df = primary_df.merge(data, 
+                                            how='inner', 
+                                            on='date')
+            else:
+                final_df = final_df.merge(data,
+                                        how='inner',
+                                        on='date')
+
+            i_count+=1
+      
+        return final_df
+
+    def add_forex(self, from_currency, to_currency, primary_df):
+        
+        cc = ForeignExchange(key=config('ALPHA_VANTAGE'), 
+                             output_format='pandas')
+        
+        data, meta_data = cc.get_currency_exchange_daily(from_symbol=from_currency, 
+                                                         to_symbol=to_currency)
+
+        print(meta_data)
+
+        data = data.rename(columns={
+            '1. open'  : from_currency+'_to_'+to_currency+'_open', 
+            '2. high'  : from_currency+'_to_'+to_currency+'_high', 
+            '3. low'   : from_currency+'_to_'+to_currency+'_low', 
+            '4. close' : from_currency+'_to_'+to_currency+'_close', 
+        }
+    )
+        
+        final_df = primary_df.merge(data,
+                                    how='inner',
+                                    on='date')
+
+        return final_df
+
+    def add_treasury_bonds(self, primary_df):
+
+        data = quandl.get("USTREASURY/BILLRATES", 
+                        authtoken=config('QUANDL_KEY'))
+
+        print("US Treasury Bond Rates Added")
+
+        final_df = primary_df.merge(data,
+                                    how='inner',
+                                    on='date')
+
+        return final_df
+
+
+
 
 
 
