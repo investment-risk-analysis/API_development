@@ -6,7 +6,6 @@ import pandas as pd
 #pylint: disable=no-member
 #pylint: disable=unbalanced-tuple-unpacking
 
-#TODO Sector Performance
 #TODO Tech Indicators
 #TODO Find TWEXB
 #TODO FOREX?
@@ -94,6 +93,49 @@ class Wrangle:
                                         how='inner', 
                                         on='date')
             return final_df
+
+    def bulk_add_securities(self, symbols, primary_df):
+        # TODO ASSERT symbols is a list:
+
+        ts = TimeSeries(key=self.alpha_vantage_key, 
+                        output_format='pandas')
+
+        i_count = 0 
+
+        for symbol in symbols:
+
+            data, meta_data = ts.get_daily(symbol=symbol, 
+                                           outputsize=self.outputsize)
+
+            print(meta_data)
+
+            data = data.rename(columns={
+                    '1. open'  : symbol+' open', 
+                    '2. high'  : symbol+' high', 
+                    '3. low'   : symbol+' low', 
+                    '4. close' : symbol+' close', 
+                    '5. volume': symbol+' volume'
+            }
+        )
+            if i_count == 0:
+                final_df = primary_df.merge(data, 
+                                            how='inner', 
+                                            on='date')
+            else:
+                final_df = final_df.merge(data,
+                                          how='inner',
+                                          on='date')
+            
+            i_count+=1
+
+        return final_df
+
+    def add_technicals(self, symbols, primary_df):
+        #TODO 
+        pass
+
+
+
 
 
 
