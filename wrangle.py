@@ -1,5 +1,13 @@
+#from alpha_vantage.techindicators import TechIndicators
+from alpha_vantage.timeseries import TimeSeries
 from decouple import config
+import pandas as pd
 
+#TODO Sector Performance
+#TODO Tech Indicators
+#TODO Find TWEXB
+#TODO FOREX?
+#TODO Other Macro?
 
 class Wrangle:
     """
@@ -9,6 +17,8 @@ class Wrangle:
     -----------------------------
     Parameters
     -----------------------------
+    symbol : str
+        string ticker used to identify the security. eg['AAPL', 'SPX'... etc.]
     interval : str
         time interval between two conscutive values,supported values 
         are: ['1min', '5min', '15min', '30min', '60min', 'daily',
@@ -27,13 +37,60 @@ class Wrangle:
     Attributes 
     -----------------------------
     """
-    
+
+
     def __init__(self,
+                 symbol,
                  interval='daily',
                  outputsize='full',
                  alpha_vantage_key=config('ALPHA_VANTAGE'), 
                  intrinio_key=config('INTRINIO_KEY')):
+
+        self.symbol=symbol
         self.interval = interval
+        self.outputsize=outputsize
         self.alpha_vantage_key = alpha_vantage_key
-        self.intinio_key = intrinio_key
-        self.week = week
+        self.intrinio_key = intrinio_key
+
+
+    def security(self,  
+                 supp_symbol=None, 
+                 primary_df:None,
+                 step='init',):
+    
+        # TODO ASSERT Error if step /= 'new' or 'add'
+        # TODO ASSERT Error if step == 'add' and no supplimental ticker is provided
+        # TODO ASSERT Error if step == 'add' and no primary dataframe is provided
+
+        ts = TimeSeries(key=self.alpha_vantage_key, 
+                        output_format='pandas')
+
+        if step == 'init':
+            symbol = self.symbol
+        else:
+            symbol = supp_symbol
+
+        data, meta_data = ts.get_daily(symbol=symbol, 
+                                       outputsize=self.outputsize)
+
+        print(meta_data)
+
+        data = data.rename(columns={
+                '1. open'  : self.symbol+' open', 
+                '2. high'  : self.symbol+' high', 
+                '3. low'   : self.symbol+' low', 
+                '4. close' : self.symbol+' close', 
+                '5. volume': self.symbol+' volumns'
+        }
+    )
+        if step == 'init':
+            return data
+
+        else:
+            final_df = primary_df.merge(data, 
+                                        how='inner', 
+                                        on='date')
+
+
+
+ 
