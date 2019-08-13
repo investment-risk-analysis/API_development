@@ -3,6 +3,9 @@ from alpha_vantage.timeseries import TimeSeries
 from decouple import config
 import pandas as pd
 
+#pylint: disable=no-member
+#pylint: disable=unbalanced-tuple-unpacking
+
 #TODO Sector Performance
 #TODO Tech Indicators
 #TODO Find TWEXB
@@ -55,7 +58,7 @@ class Wrangle:
 
     def security(self,  
                  supp_symbol=None, 
-                 primary_df:None,
+                 primary_df=None,
                  step='init',):
     
         # TODO ASSERT Error if step /= 'new' or 'add'
@@ -76,11 +79,11 @@ class Wrangle:
         print(meta_data)
 
         data = data.rename(columns={
-                '1. open'  : self.symbol+' open', 
-                '2. high'  : self.symbol+' high', 
-                '3. low'   : self.symbol+' low', 
-                '4. close' : self.symbol+' close', 
-                '5. volume': self.symbol+' volumns'
+                '1. open'  : symbol+' open', 
+                '2. high'  : symbol+' high', 
+                '3. low'   : symbol+' low', 
+                '4. close' : symbol+' close', 
+                '5. volume': symbol+' volume'
         }
     )
         if step == 'init':
@@ -90,6 +93,7 @@ class Wrangle:
             final_df = primary_df.merge(data, 
                                         how='inner', 
                                         on='date')
+            return final_df
 
 
 
