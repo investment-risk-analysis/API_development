@@ -6,12 +6,11 @@ import pandas as pd
 import numpy as np
 import quandl
 
+#pylint: disable=invalid-sequence-index
 #pylint: disable=no-member
 #pylint: disable=unbalanced-tuple-unpacking
 
 #TODO Warnings about data loss
-#TODO ASSERT Testing
-#TODO Print Statements
 #TODO Find TWEXB
 #TODO Other Macro from Hira
 
@@ -102,7 +101,13 @@ class DailyTimeSeries:
         # API Call
         data, meta_data = ts.get_daily(symbol=self.symbol, 
                                        outputsize=self.outputsize)
-        print(meta_data)
+
+        # Print Statement
+        print('###################################################################','\n',
+        'Ticker: ' , meta_data['2. Symbol'], '\n',
+        'Last Refreshed: ', meta_data['3. Last Refreshed'], '\n',
+        'Data Retrieved: ', meta_data['1. Information'],'\n',
+        '###################################################################')
 
         # Produce better column names
         data = data.rename(columns={
@@ -138,7 +143,13 @@ class DailyTimeSeries:
 
             data, meta_data = ts.get_daily(symbol=symbol, 
                                            outputsize=self.outputsize)
-            print(meta_data)
+            
+            # Print Statement
+            print('###################################################################','\n',
+            'Ticker: ' , meta_data['2. Symbol'], '\n',
+            'Last Refreshed: ', meta_data['3. Last Refreshed'], '\n',
+            'Data Retrieved: ', meta_data['1. Information'],'\n',
+            '###################################################################')
 
             # Give the columns a better name
             data = data.rename(columns={
@@ -197,7 +208,13 @@ class DailyTimeSeries:
         for ind in new_indicators:
 
             data, meta_data = getattr(ti, ind)(symbol=symbol)
-            print(meta_data)
+
+            # Print Statement
+            print('###################################################################','\n',
+            'Ticker: ' , meta_data['1: Symbol'], '\n',
+            'Last Refreshed: ', meta_data['2: Indicator'], '\n',
+            'Data Retrieved: ', meta_data['3: Last Refreshed'],'\n',
+            '###################################################################')
 
             data = data.rename(columns={
                     symbol : self.symbol+'_'+symbol, 
@@ -237,11 +254,9 @@ class DailyTimeSeries:
                              output_format='pandas')
         
         # API Call
-        data, meta_data = cc.get_currency_exchange_daily(from_symbol=from_currency, 
-                                                         to_symbol=to_currency,
-                                                         outputsize=self.outputsize)
-
-        print(meta_data)
+        data = cc.get_currency_exchange_daily(from_symbol=from_currency, 
+                                              to_symbol=to_currency,
+                                              outputsize=self.outputsize)
 
         data = data.rename(columns={
             '1. open'  : from_currency+'_to_'+to_currency+'_open', 
@@ -250,11 +265,9 @@ class DailyTimeSeries:
             '4. close' : from_currency+'_to_'+to_currency+'_close', 
         }
     )
-        
         final_df = primary_df.merge(data,
                                     how='inner',
                                     on='date')
-
         return final_df
 
     def add_treasury_bonds(self, primary_df):
