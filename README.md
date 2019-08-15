@@ -2,9 +2,22 @@
 
 The purpose of fin_data is to provide a simple yet flexible method for generating financial time series for the Investment Risk Analysis project for Lambda Labs. It relies on a series of API calls to create a data pipeline for model training.
 
-# Getting Started
+Table of Contents
+-----------
 
-## Development Environment
+- [Getting Started](#Getting-Started)
+   * [Development Environment](#Development-Environment)
+   * [Environment Variables and Secrets](#Environment-Variables-and-Secrets)
+   * [Create a DataFrame](#Create-a-DataFrame)
+- [Additional Methods](#Additional-Methods)  
+   * [add_securities()](#add_securities)  
+   * [add_technicals()](#add_technicals)  
+   * [add_forex()](#add_forex)  
+   * [add_treasury_bonds()](#add_treasury_bonds)
+
+## Getting Started
+
+### Development Environment
 
 There are several libraries that are necessary to use fin_data. Once modeling commences, a conda `environment.yml` will be established and maintained. Until then, here are the libraries that are necessary to run fin_data:
 
@@ -14,7 +27,7 @@ There are several libraries that are necessary to use fin_data. Once modeling co
     pandas
     numpy
 
-## Environment Variables and Secrets
+### Environment Variables and Secrets
 
 The API keys should be contained in a `.env` file located in the same directory. The directory should also contain a .gitignore. These environment variables are then referenced using the `python decouple` module. To install the modele, run the following command in a your terminal.
 
@@ -30,7 +43,7 @@ Example .env file:
     ALPHA_VANTAGE = "api_key_here"
     QUANDL_KEY = "api_key_here"
 
-## Getting Started
+### Create a DataFrame
 
 To begin, import the DailyTimeSeries class from the fin_data.py file:  
 
@@ -48,16 +61,11 @@ This example object will focus on Apple, so that when you call other fundamnetal
 
 From here, you can judiciously add other financial information to your dataframe.
 
-# Additional Methods
-
--[add_securities](#add_securities())  
--[add_technicals](#add_technicals())  
--[add_forex](#add_forex())  
--[add_treasury_bonds](#add_treasury_bonds())
+## Additional Methods
 
 These methods are the meat of fin_data. It ingests data from API calls and merges them to the given dataframe with an inner merge on the datetime index. In cases where the new data is relatively sparse, it may significantly reduce the total amount of data in the dataset. **Some methods are still in development.
 
-## add_securities()
+### add_securities()
 
 Adds price history from a list of securities and merges that data with
 the existing dataframe. Only accepts a list of securities. Requires two parameters, **list of security tickers** and a **Pandas DataFrame to merge newly acquired data to.**
@@ -69,7 +77,7 @@ the existing dataframe. Only accepts a list of securities. Requires two paramete
 
 ![limited security dataframe](./img/sec_df.png)
 
-## add_technicals()
+### add_technicals()
 
 Adds technical indicators from a list of securities and merges that data with the existing dataframe. Only accepts a list of technical indicators. Only accepts a list of technical indicators. Requires two parameters, **list of technical indicators** and a **Pandas DataFrame to merge newly acquired data to.** Allows an additional parameter supp_symbol. This refers to a supplimentary security symbol that provides the user with flexibility as to which company or index the technical indicator is being analyzed. This symbol must be a recognized security symbol.
 
@@ -82,11 +90,11 @@ Adds technical indicators from a list of securities and merges that data with th
 
 _**TODO:** Add Technical Indicators Table_
 
-## add_forex()
+### add_forex()
 
 Not functioning
 
-## add_treasury_bonds()
+### add_treasury_bonds()
 
 Adds US treasury Bond interest rates to the dataset. Contains a wide-swath of available and unavailable bonds. Several features contain a large number of null values. Will warn about those null values in the print statement. Requires one parameter; a **Pandas DataFrame to merge newly acquired data to.**
 
