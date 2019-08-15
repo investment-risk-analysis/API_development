@@ -88,7 +88,63 @@ Adds technical indicators from a list of securities and merges that data with th
 
 ![limited technicals dataframe](./img/tech_df.png)
 
-_**TODO:** Add Technical Indicators Table_
+Below is a table of Technical Indicators and the associated abbreviations to be used when calling the **_add_technicals()_** method. Further information can be found [here](https://www.alphavantage.co/documentation/).
+
+| Technical Indicator | API Input Abbreviation |
+| --------------------| ------------ |
+| Simple Moving Average   | SMA       |
+| Exponential Moving Average   | EMA        |
+| Weighted Moving Average      | WMA       |
+| Double Exponential Moving Average   | DEMA        |
+| Triple Exponential Moving Average      | TEMA       |
+| Triangular Moving Average   | TRIMA        |
+| Kaufman Adaptive Moving Average      | KAMA       |
+| MESA Adaptive Moving Average   | MAMA        |
+| Volume Weighted Average Price       | VWAP       |
+| Triple Exponential Moving Average   | T3        |
+| Moving Average Convergence / Divergence      | MACD       |
+| Moving Average Convergence / Divergence with Controllable Moving Average Type   | MACDEXT        |
+| Stochastic Oscillator      | STOCH       |
+| Stochastic Fast   | STOCHF        |
+| Relative Strength Index      | RSI       |
+| Stochastic Relative Strength Index   | STOCHRSI        |
+| Williams %R      | WILLR       |
+| Average Directional Movement Index     | ADX       |
+| Par Average Directional Movement Index Ratingagraph   | ADXR |
+| Absolute Price Oscillator   | APO        |
+| Percentage Price Oscillator      | PPO       |
+| Momentum   | MOM        |
+| Balance of Power      | BOP       |
+| Commodity Channel Index   | CCI        |
+| Chande Momentum Oscillator      | CMO       |
+| Rate of Change   | ROC        |
+| Rate of Change Ratio      | ROCR       |
+| Aroon Values   | AROON        |
+| Aroon Oscillator   | AROONOSC        |
+| Money Flow Index      | MFI       |
+| One-Day Rate of Change of a Triple Smooth Exponential Moving Average   | TRIX        |
+| Ultimate Oscillator      | ULTOSC       |
+| Directional Movement Index   | DX        |
+| Minus Directional Indicator      | MINUS_DI       |
+| Plus Directional Indicator   | PLUS_DI        |
+| Minus Directional Movement      | MINUS_DM       |
+| Plus Directional Movement   | PLUS_DM        |
+| Bollinger Bands      | BBANDS       |
+| Midpoint Values   | MIDPOINT        |
+| Midpoint Price Values   | MIDPRICE        |
+| Parabolic SAR Values   | SAR        |
+| True Range Values      | TRANGE       |
+| Average True Range   | ATR        |
+| Normalized Average True Range      | NATR       |
+| Chaikin A/D Line   | AD        |
+| Chaikin A/D Oscillator      | ADOSC       |
+| On Balance Volume   | OBV        |
+| Hilbert Transform - Instantaneous Trendline      | HT_TRENDLINE       |
+| Hilbert Transform - Sine Wave   | HT_SINE        |
+| Hilbert Transform - Trend vs. Cycle Mode   | HT_TRENDMODE        |
+| Hilbert Transform - Dominant Cycle Period      | HT_DCPERIOD       |
+| Hilbert Transform - Dominant Cycle Phase   | HT_DCPHASE        |
+| Hilbert Transform - Phasor Components     | HT_PHASOR       |
 
 ### add_forex()
 
