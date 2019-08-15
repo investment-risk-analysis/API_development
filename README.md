@@ -6,14 +6,14 @@ Table of Contents
 -----------
 
 - [Getting Started](#Getting-Started)
-   * [Development Environment](#Development-Environment)
-   * [Environment Variables and Secrets](#Environment-Variables-and-Secrets)
-   * [Create a DataFrame](#Create-a-DataFrame)
+    - [Development Environment](#Development-Environment)
+    - [Environment Variables and Secrets](#Environment-Variables-and-Secrets)
+    - [Create a DataFrame](#Create-a-DataFrame)
 - [Additional Methods](#Additional-Methods)  
-   * [add_securities()](#add_securities)  
-   * [add_technicals()](#add_technicals)  
-   * [add_forex()](#add_forex)  
-   * [add_treasury_bonds()](#add_treasury_bonds)
+    - [add_securities()](#add_securities)  
+    - [add_technicals()](#add_technicals)  
+    - [add_forex()](#add_forex)  
+    - [add_treasury_bonds()](#add_treasury_bonds)
 
 ## Getting Started
 
@@ -31,7 +31,7 @@ There are several libraries that are necessary to use fin_data. Once modeling co
 
 The API keys should be contained in a `.env` file located in the same directory. The directory should also contain a .gitignore. These environment variables are then referenced using the `python decouple` module. To install the modele, run the following command in a your terminal.
 
-<code>pip install python-decouple</code>
+    pip install python-decouple
 
 **Do not commit the API keys to github!!!**.
 
