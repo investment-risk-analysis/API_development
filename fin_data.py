@@ -10,9 +10,9 @@ import quandl
 #pylint: disable=no-member
 #pylint: disable=unbalanced-tuple-unpacking
 
-#TODO Warnings about data loss
-#TODO Find TWEXB
+#TODO Warnings
 #TODO Other Macro from Hira
+#TODO Fundamentals from Joe
 
 class DailyTimeSeries:
     """
