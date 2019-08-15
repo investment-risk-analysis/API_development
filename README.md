@@ -1,4 +1,4 @@
-# Generating a Daily Time Series with fin_data
+# Generating Daily Time Series With `fin_data`
 
 The purpose of fin_data is to provide a simple yet flexible method for generating financial time series for the Investment Risk Analysis project for Lambda Labs. It relies on a series of API calls to create a data pipeline for model training.
 
