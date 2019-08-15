@@ -201,7 +201,7 @@ class DailyTimeSeries:
                             output_format='pandas')
         
         # Clean technical indicator abbreviations
-        new_indicators = ["get_"+symbol.lower() for symbol in tech_symbols]
+        new_indicators = ["get_"+indicator.lower() for indicator in tech_symbols]
         
         # Loop to populate and merge old and new data 
         i_count = 0
@@ -215,11 +215,14 @@ class DailyTimeSeries:
             'Last Refreshed: ', meta_data['2: Indicator'], '\n',
             'Data Retrieved: ', meta_data['3: Last Refreshed'],'\n',
             '###################################################################')
-
+            
+            # Rename Column
+            c_name = str(data.columns[0])
             data = data.rename(columns={
-                    symbol : self.symbol+'_'+symbol, 
+                c_name : symbol+'_'+c_name
             }
         )
+            # Merge
             if i_count == 0:
                 final_df = primary_df.merge(data, 
                                             how='inner', 
@@ -298,6 +301,8 @@ class DailyTimeSeries:
         print()
         print('################################################')
         
+        data.index.name = 'date'
+
         # Final Merge
         final_df = primary_df.merge(data,
                                     how='inner',
